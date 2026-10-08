@@ -1,0 +1,75 @@
+.viewport {
+  position: fixed;
+  bottom: var(--space-4);
+  right: var(--space-4);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  pointer-events: none;
+  max-width: var(--toast-width);
+  width: 100%;
+}
+
+.toast {
+  pointer-events: auto;
+  background-color: var(--toast-bg);
+  border: var(--border-width) solid var(--toast-border);
+  border-radius: var(--toast-radius);
+  box-shadow: var(--toast-shadow);
+  padding: var(--toast-padding);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-fg);
+  animation: slideUp var(--duration-base) var(--ease-out);
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+.success .icon {
+  color: var(--color-success);
+}
+
+.error .icon {
+  color: var(--color-danger);
+}
+
+.info .icon {
+  color: var(--color-accent);
+}
+
+.message {
+  flex: 1;
+  font-size: var(--text-sm);
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: var(--color-fg-secondary);
+  cursor: pointer;
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeBtn:hover {
+  color: var(--color-fg);
+  background-color: rgba(255, 255, 255, var(--opacity-hover-overlay));
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,125 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background: rgba(10, 10, 15, 0.72);
+  backdrop-filter: blur(12px);
+  border-bottom: var(--border-width) solid var(--color-border);
+  height: 64px;
+}
+
+@media (min-width: 1024px) {
+  .header {
+    height: 72px;
+  }
+}
+
+.navInner {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 var(--page-gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.leftGroup, .rightGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  color: var(--color-fg);
+  letter-spacing: var(--tracking-tight);
+}
+
+.brandDot {
+  color: var(--color-accent);
+}
+
+.desktopNav {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .desktopNav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+  }
+}
+
+.navLink {
+  color: var(--color-fg-secondary);
+  font-weight: var(--weight-medium);
+  transition: color var(--transition-colors);
+  position: relative;
+  padding: var(--space-2) 0;
+}
+
+.navLink:hover, .navLink.active {
+  color: var(--color-fg);
+}
+
+.navLink.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--color-accent);
+}
+
+.menuButton, .searchToggle, .iconLink {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-fg-secondary);
+  transition: background-color var(--transition-colors), color var(--transition-colors);
+}
+
+.menuButton:hover, .searchToggle:hover, .iconLink:hover {
+  background-color: rgba(255, 255, 255, var(--opacity-hover-overlay));
+  color: var(--color-fg);
+}
+
+@media (min-width: 1024px) {
+  .menuButton {
+    display: none;
+  }
+  .searchToggle {
+    display: none;
+  }
+}
+
+.desktopSearch {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .desktopSearch {
+    display: block;
+    width: 240px;
+  }
+}
+
+.mobileSearchRow {
+  padding: var(--space-3) var(--page-gutter);
+  background-color: var(--color-bg-alt);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+@media (min-width: 1024px) {
+  .mobileSearchRow {
+    display: none;
+  }
+}
