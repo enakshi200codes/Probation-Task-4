@@ -1,0 +1,105 @@
+.summaryBox {
+  background-color: var(--color-card);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  position: sticky;
+  top: calc(var(--navbar-height) + var(--space-8));
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  margin: 0 0 var(--space-6) 0;
+  color: var(--color-fg);
+}
+
+.shippingPromo {
+  margin-bottom: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.promoText, .successText {
+  font-size: var(--text-sm);
+  color: var(--color-fg-secondary);
+}
+
+.successText {
+  color: var(--color-success);
+  font-weight: var(--weight-medium);
+}
+
+.amountLeft {
+  color: var(--color-fg);
+  font-family: var(--font-mono);
+}
+
+.progressBar {
+  height: 4px;
+  width: 100%;
+  background-color: var(--color-muted);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background-color: var(--color-accent);
+  border-radius: var(--radius-full);
+  transition: width var(--duration-base) var(--ease-standard);
+}
+
+.lineItems {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0 0 var(--space-6) 0;
+  padding-bottom: var(--space-6);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  font-size: var(--text-base);
+  color: var(--color-fg-secondary);
+  margin: 0;
+}
+
+.value {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  color: var(--color-fg);
+  margin: 0;
+}
+
+.savingsRow .value {
+  color: var(--color-success);
+}
+
+.totalRow {
+  padding-top: var(--space-2);
+}
+
+.totalLabel {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  color: var(--color-fg);
+  margin: 0;
+}
+
+.totalValue {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-fg);
+  margin: 0;
+}
