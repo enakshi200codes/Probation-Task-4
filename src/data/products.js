@@ -8,7 +8,7 @@ export const products = [
     originalPrice: 119.00,
     rating: 4.6,
     reviewCount: 128,
-    images: ["https://images.unsplash.com/photo-1534349762230-e0cadf39f574?auto=format&fit=crop&w=800&q=80"],
+    images: ["https://images.unsplash.com/photo-1621177555452-bedbe4c28879?q=80&w=385&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"],
     description: "An architectural desk lamp featuring warm, dimmable LED diffusion housed in brushed anodized aluminum. Designed to anchor evening study and focused writing sessions.",
     specifications: [
       { label: "Material", value: "Brushed aluminum" },

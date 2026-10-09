@@ -1,0 +1,97 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-card);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  gap: var(--space-4);
+  transition: var(--transition-transform), var(--transition-colors);
+  box-shadow: var(--shadow-inset-highlight);
+  position: relative;
+}
+
+@media (min-width: 640px) {
+  .card {
+    padding: var(--space-4);
+  }
+}
+
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-border-hover);
+    box-shadow: var(--glow-accent-sm), var(--shadow-inset-highlight);
+  }
+
+  .card:hover .imageLink img {
+    transform: scale(1.03);
+  }
+  
+  /* Make button amber on card hover as per design specs */
+  .card:hover .actionWrapper button {
+    background-color: var(--color-accent);
+    color: var(--color-accent-fg);
+    border-color: var(--color-accent);
+  }
+}
+
+.imageLink {
+  display: block;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.metadata {
+  margin-bottom: var(--space-2);
+}
+
+.categoryLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--color-fg-secondary);
+}
+
+.name {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  margin: 0 0 var(--space-2) 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: var(--leading-snug);
+}
+
+.nameLink {
+  color: var(--color-fg);
+}
+
+.nameLink::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.ratingWrapper {
+  margin-bottom: var(--space-3);
+}
+
+.priceWrapper {
+  margin-bottom: var(--space-4);
+  margin-top: auto;
+}
+
+.actionWrapper {
+  position: relative;
+  z-index: 2; /* Keep button clickable above the card's pseudo-link */
+}

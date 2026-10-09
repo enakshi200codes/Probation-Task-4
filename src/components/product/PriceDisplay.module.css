@@ -1,0 +1,28 @@
+.priceContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.currentPrice {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  color: var(--color-fg);
+}
+
+.originalPrice {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-fg-secondary);
+  text-decoration: line-through;
+}
+
+/* Size variants */
+.base .currentPrice {
+  font-size: var(--text-lg);
+}
+
+.large .currentPrice {
+  font-size: var(--text-3xl);
+}

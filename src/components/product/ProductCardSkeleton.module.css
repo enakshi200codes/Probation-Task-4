@@ -1,0 +1,32 @@
+.cardSkeleton {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-card);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  gap: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .cardSkeleton {
+    padding: var(--space-4);
+  }
+}
+
+.imageWrapper {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  flex: 1;
+}
+
+.bottom {
+  margin-top: auto;
+  padding-top: var(--space-2);
+}
