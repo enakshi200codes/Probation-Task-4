@@ -68,7 +68,7 @@ export const products = [
     originalPrice: 49.00,
     rating: 4.3,
     reviewCount: 76,
-    images: ["https://images.unsplash.com/photo-1550985616-11411d33b6c4?auto=format&fit=crop&w=800&q=80"],
+    images: ["https://images.unsplash.com/photo-1580130222033-a05b644a9342?q=80&w=580&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"],
     description: "Set of two warm-spectrum connected bulbs designed to automatically synchronize color temperature with evening twilight.",
     specifications: [
       { label: "Base", value: "E26 / E27 standard" },
@@ -394,7 +394,7 @@ export const products = [
     originalPrice: null,
     rating: 4.6,
     reviewCount: 89,
-    images: ["https://images.unsplash.com/photo-1577974023883-053ed575c977?auto=format&fit=crop&w=800&q=80"],
+    images: ["https://plus.unsplash.com/premium_photo-1669824023993-273720598b14?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"],
     description: "Rich Madagascar vanilla bean paired with dark tobacco leaf and toasted oak. A comforting, decadent late-night scent.",
     specifications: [
       { label: "Vessel", value: "Matte ceramic tumbler" },

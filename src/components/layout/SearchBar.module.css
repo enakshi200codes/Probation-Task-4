@@ -19,7 +19,7 @@
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-md);
   padding-left: calc(var(--space-3) + 20px);
-  padding-right: var(--space-3);
+  padding-right: 36px;
   font-size: var(--text-sm);
   color: var(--color-fg);
   transition: border-color var(--transition-colors);
@@ -32,4 +32,25 @@
 .searchInput:focus {
   border-color: var(--color-accent);
   outline: none;
+}
+
+.clearBtn {
+  position: absolute;
+  right: var(--space-2);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-fg-secondary);
+  background: transparent;
+  padding: 0;
+}
+
+.clearBtn:hover {
+  background-color: rgba(255, 255, 255, var(--opacity-hover-overlay));
+  color: var(--color-fg);
 }
