@@ -1,21 +1,16 @@
 import React, { useState } from "react";
-import { Heart, Minus, Plus } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import PriceDisplay from "./PriceDisplay";
 import Rating from "../ui/Rating";
 import AddToCartButton from "./AddToCartButton";
-import { useToast } from "../../context/ToastContext";
+import WishlistButton from "./WishlistButton";
 import styles from "./ProductPurchasePanel.module.css";
 
 export default function ProductPurchasePanel({ product }) {
   const [quantity, setQuantity] = useState(1);
-  const { showToast } = useToast();
 
   const handleDecrease = () => setQuantity((prev) => Math.max(prev - 1, 1));
   const handleIncrease = () => setQuantity((prev) => Math.min(prev + 1, 10));
-
-  const handleWishlistPlaceholder = () => {
-    showToast("Wishlist functionality unlocks in Phase 9.", { type: "info" });
-  };
 
   return (
     <div className={styles.panel}>
@@ -69,14 +64,7 @@ export default function ProductPurchasePanel({ product }) {
               fullWidth={true} 
             />
           </div>
-          <button 
-            type="button" 
-            className={styles.wishlistBtn} 
-            onClick={handleWishlistPlaceholder}
-            aria-label="Add to wishlist"
-          >
-            <Heart size={20} />
-          </button>
+          <WishlistButton productId={product.id} productName={product.name} variant="panel" />
         </div>
       </div>
     </div>

@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { X } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
 import styles from "./MobileMenu.module.css";
 
 export default function MobileMenu({ isOpen, onClose }) {
   const dialogRef = useRef(null);
+  const { isAuthenticated, logout } = useAuth();
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -21,7 +23,6 @@ export default function MobileMenu({ isOpen, onClose }) {
     }
   }, [isOpen]);
 
-  // Automatically close menu if resized to desktop viewport (>= 1024px)
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024 && isOpen) {
@@ -31,6 +32,11 @@ export default function MobileMenu({ isOpen, onClose }) {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [isOpen, onClose]);
+
+  const handleLogout = () => {
+    logout();
+    onClose();
+  };
 
   return (
     <dialog
@@ -59,9 +65,20 @@ export default function MobileMenu({ isOpen, onClose }) {
         <Link to="/wishlist" onClick={onClose} className={styles.link}>
           Wishlist
         </Link>
-        <Link to="/login" onClick={onClose} className={styles.link}>
-          Log In / Account
-        </Link>
+        {isAuthenticated ? (
+          <>
+            <Link to="/account" onClick={onClose} className={styles.link}>
+              Account
+            </Link>
+            <button type="button" onClick={handleLogout} className={`${styles.link} ${styles.logoutBtn}`}>
+              Log Out
+            </button>
+          </>
+        ) : (
+          <Link to="/login" onClick={onClose} className={styles.link}>
+            Log In
+          </Link>
+        )}
       </nav>
     </dialog>
   );

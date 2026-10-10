@@ -1,0 +1,51 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--color-fg-secondary);
+  cursor: pointer;
+  transition: var(--transition-colors), var(--transition-transform);
+}
+
+.button:active {
+  transform: scale(0.95);
+}
+
+.card {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-alt);
+  border: var(--border-width) solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  z-index: 10; /* Keep above card link overlay */
+}
+
+.card:hover {
+  color: var(--color-fg);
+  border-color: var(--color-border-hover);
+  background-color: var(--color-card);
+}
+
+.panel {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  border: var(--border-width) solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.panel:hover {
+  color: var(--color-accent);
+  border-color: var(--color-border-hover);
+  background-color: rgba(255, 255, 255, var(--opacity-hover-overlay));
+}
+
+.saved {
+  color: var(--color-accent);
+}

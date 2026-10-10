@@ -114,28 +114,3 @@
 .addBtnWrapper {
   flex: 1;
 }
-
-.wishlistBtn {
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: transparent;
-  color: var(--color-fg);
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: var(--transition-colors), var(--transition-transform);
-}
-
-.wishlistBtn:hover {
-  border-color: var(--color-border-hover);
-  background-color: rgba(255, 255, 255, var(--opacity-hover-overlay));
-  color: var(--color-accent);
-}
-
-.wishlistBtn:active {
-  transform: scale(0.95);
-}

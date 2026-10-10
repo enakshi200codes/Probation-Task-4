@@ -17,6 +17,8 @@
 }
 
 .input {
+  width: 100%;
+  box-sizing: border-box;
   height: var(--input-height, 44px);
   background-color: var(--color-bg-alt);
   border: var(--border-width) solid var(--color-border);

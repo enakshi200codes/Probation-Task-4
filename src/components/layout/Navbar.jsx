@@ -4,12 +4,14 @@ import { Search, Menu, Heart, User, ShoppingBag } from "lucide-react";
 import SearchBar from "./SearchBar";
 import CartLink from "./CartLink";
 import MobileMenu from "./MobileMenu";
+import { useAuth } from "../../context/AuthContext";
 import styles from "./Navbar.module.css";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const menuButtonRef = useRef(null);
+  const { isAuthenticated } = useAuth();
 
   const handleCloseMenu = () => {
     setIsMenuOpen(false);
@@ -69,7 +71,7 @@ export default function Navbar() {
           <Link to="/wishlist" className={styles.iconLink} aria-label="Wishlist">
             <Heart size={20} />
           </Link>
-          <Link to="/login" className={styles.iconLink} aria-label="Account">
+          <Link to={isAuthenticated ? "/account" : "/login"} className={styles.iconLink} aria-label="Account">
             <User size={20} />
           </Link>
           <CartLink />

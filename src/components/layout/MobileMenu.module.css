@@ -76,3 +76,11 @@
 .link:hover {
   color: var(--color-fg);
 }
+
+.logoutBtn { 
+  background: transparent; 
+  border: none; text-align: 
+  left; cursor: pointer; 
+  padding: var(--space-2) 0; 
+  font-family: inherit; 
+}

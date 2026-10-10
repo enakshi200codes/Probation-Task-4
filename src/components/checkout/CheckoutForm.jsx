@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useToast } from "../../context/ToastContext";
-import { PLACE_ORDER_DELAY_MS } from "../../config/constants";
+import { PLACE_ORDER_DELAY_MS, STORAGE_KEYS } from "../../config/constants";
+import { writeJSON, readJSON } from "../../utils/storage";
 import InputField from "../ui/InputField";
 import Button from "../ui/Button";
 import styles from "./CheckoutForm.module.css";
 
-export default function CheckoutForm() {
+export default function CheckoutForm({ cartLines, totals, onOrderSuccess }) {
   const navigate = useNavigate();
   const { clearCart } = useCart();
   const { showToast } = useToast();
@@ -63,11 +64,37 @@ export default function CheckoutForm() {
     
     // Simulated network delay for placing the order
     setTimeout(() => {
+      // 1. Snapshot the order details
+      const orderId = `ORD-${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
+      const newOrder = {
+        id: orderId,
+        createdAt: new Date().toISOString(),
+        customer: {
+          email: formData.email,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          address: formData.address,
+          city: formData.city,
+          zipCode: formData.zipCode
+        },
+        lines: cartLines,
+        totals: totals
+      };
+
+      // 2. Persist to storage safely
+      const existingOrders = readJSON(STORAGE_KEYS.ORDERS, []);
+      writeJSON(STORAGE_KEYS.ORDERS, [newOrder, ...existingOrders]);
+
+      // 3. Notify parent that order is secured to disarm the empty-cart barricade
+      if (onOrderSuccess) onOrderSuccess();
+
+      // 4. Clear the cart only AFTER snapshot is secure and barricade is down
       setIsSubmitting(false);
       clearCart();
-      showToast("Order placed successfully! (Simulated)", { type: "success" });
-      // Bounding Phase 7: Punting back to home since Phase 8 (Order Confirmation) isn't built yet
-      navigate("/");
+      
+      // 5. Redirect to Phase 8 Confirmation Page
+      showToast("Order placed successfully!", { type: "success" });
+      navigate(`/order-confirmation/${orderId}`);
     }, PLACE_ORDER_DELAY_MS);
   };
 

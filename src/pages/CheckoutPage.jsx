@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { Navigate, Link } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import { useCart } from "../context/CartContext";
@@ -16,12 +16,14 @@ export default function CheckoutPage() {
   useDocumentTitle("Checkout — Nocturne");
   const { items, totalItems } = useCart();
   const { products } = useCatalog();
+  const [isOrderPlaced, setIsOrderPlaced] = useState(false);
 
   const cartLines = useMemo(() => buildCartLines(items, products), [items, products]);
   const totals = useMemo(() => calculateTotals(cartLines), [cartLines]);
 
   // Barricade: Prevent users from checking out with an empty cart
-  if (totalItems === 0) {
+  // Bypass if the order was just successfully placed to allow the router transition to finish
+  if (totalItems === 0 && !isOrderPlaced) {
     return <Navigate to="/cart" replace />;
   }
 
@@ -39,7 +41,11 @@ export default function CheckoutPage() {
 
           <div className={styles.layout}>
             <div className={styles.formColumn}>
-              <CheckoutForm />
+              <CheckoutForm 
+                cartLines={cartLines} 
+                totals={totals} 
+                onOrderSuccess={() => setIsOrderPlaced(true)}
+              />
             </div>
             <div className={styles.summaryColumn}>
               <OrderSummary lines={cartLines} totals={totals} />

@@ -2,24 +2,24 @@
   position: fixed;
   bottom: var(--space-4);
   right: var(--space-4);
-  z-index: var(--z-toast);
+  z-index: 9999; /* Ensures toasts sit above all overlays and dialogs */
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
   pointer-events: none;
-  max-width: var(--toast-width);
-  width: 100%;
+  width: calc(100% - 32px); /* Responsive safety bounds for mobile */
+  max-width: 400px;
 }
 
 .toast {
   pointer-events: auto;
-  background-color: var(--toast-bg);
-  border: var(--border-width) solid var(--toast-border);
-  border-radius: var(--toast-radius);
-  box-shadow: var(--toast-shadow);
-  padding: var(--toast-padding);
+  background-color: var(--color-card); /* Opaque solid background */
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg); /* Elevation over page content */
+  padding: var(--space-4);
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* Prevents icons from stretching if text wraps */
   gap: var(--space-3);
   color: var(--color-fg);
   animation: slideUp var(--duration-base) var(--ease-out);
@@ -27,6 +27,7 @@
 
 .icon {
   flex-shrink: 0;
+  margin-top: 2px; /* Aligns strictly with the first line of text */
 }
 
 .success .icon {
@@ -44,6 +45,9 @@
 .message {
   flex: 1;
   font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  word-break: break-word;
+  overflow-wrap: break-word; /* Forces long strings to wrap safely */
 }
 
 .closeBtn {
@@ -52,10 +56,13 @@
   color: var(--color-fg-secondary);
   cursor: pointer;
   padding: var(--space-1);
+  margin: calc(var(--space-1) * -1); /* Pulls button flush right while maintaining hit area */
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  transition: color var(--transition-colors), background-color var(--transition-colors);
 }
 
 .closeBtn:hover {
@@ -66,7 +73,7 @@
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;

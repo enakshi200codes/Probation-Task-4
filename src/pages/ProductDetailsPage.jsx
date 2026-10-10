@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useCatalog } from "../context/CatalogContext";
+import { useRecent } from "../context/RecentContext";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
-import { selectRelated } from "../utils/selectors";
+import { selectRelated, selectByIds } from "../utils/selectors";
+import { RELATED_COUNT, RECENT_DISPLAY_COUNT } from "../config/constants";
 import CatalogGate from "../components/layout/CatalogGate";
 import Container from "../components/ui/Container";
 import EmptyState from "../components/ui/EmptyState";
@@ -11,17 +13,30 @@ import ProductPurchasePanel from "../components/product/ProductPurchasePanel";
 import ProductSpecs from "../components/product/ProductSpecs";
 import ProductRail from "../components/home/ProductRail";
 import { PackageX } from "lucide-react";
-import { RELATED_COUNT } from "../config/constants";
 import styles from "./ProductDetailsPage.module.css";
 
 export default function ProductDetailsPage() {
   const { productId } = useParams();
   const { getProductById, products } = useCatalog();
+  const { addRecent, recentIds } = useRecent();
   
   const product = getProductById(productId);
   const relatedProducts = product ? selectRelated(product, products, RELATED_COUNT) : [];
+  
+  // Filter out the current product from recently viewed and limit count
+  const recentProducts = selectByIds(
+    recentIds.filter((id) => id !== productId), 
+    products
+  ).slice(0, RECENT_DISPLAY_COUNT);
 
   useDocumentTitle(product ? `${product.name} — Nocturne` : "Product Not Found");
+
+  // Record product view
+  useEffect(() => {
+    if (product) {
+      addRecent(product.id);
+    }
+  }, [product, addRecent]);
 
   return (
     <CatalogGate>
@@ -55,6 +70,15 @@ export default function ProductDetailsPage() {
                   title="Similar Objects" 
                   products={relatedProducts} 
                   viewAllTo={`/products?category=${product.category}`} 
+                />
+              </div>
+            )}
+            
+            {recentProducts.length > 0 && (
+              <div className={styles.relatedSection}>
+                <ProductRail 
+                  title="Recently Viewed" 
+                  products={recentProducts} 
                 />
               </div>
             )}
