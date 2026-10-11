@@ -98,3 +98,52 @@
   flex: 1;
   min-width: 0;
 }
+
+.chipsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background-color: var(--color-card);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: var(--space-1) var(--space-3);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-fg);
+  cursor: pointer;
+  transition: border-color var(--transition-colors), background-color var(--transition-colors);
+}
+
+.chip:hover {
+  border-color: var(--color-danger);
+  background-color: rgba(255, 255, 255, var(--opacity-hover-overlay));
+}
+
+.chipIcon {
+  color: var(--color-fg-secondary);
+}
+
+.chip:hover .chipIcon {
+  color: var(--color-danger);
+}
+
+.clearAllBtn {
+  background: transparent;
+  border: none;
+  font-size: var(--text-sm);
+  color: var(--color-fg-secondary);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.clearAllBtn:hover {
+  color: var(--color-fg);
+}

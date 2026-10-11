@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import ToastViewport from "./components/layout/ToastViewport";
+import ScrollToTop from "./components/layout/ScrollToTop";
 import HomePage from "./pages/HomePage";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
@@ -16,6 +17,8 @@ import AccountPage from "./pages/AccountPage";
 export default function App() {
   return (
     <div className="app-container">
+      {/* Restores expected scroll behavior across the SPA */}
+      <ScrollToTop />
       <Navbar />
       <main className="main-content">
         <Routes>
@@ -31,7 +34,6 @@ export default function App() {
           <Route path="/account" element={<AccountPage />} />
         </Routes>
       </main>
-      {/* Mounted exactly once to prevent mirrored toast rendering */}
       <ToastViewport />
     </div>
   );

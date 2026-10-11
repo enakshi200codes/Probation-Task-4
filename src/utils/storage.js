@@ -1,35 +1,26 @@
-export function readJSON(key, fallback, validator = null) {
+export function readJSON(key, fallback) {
   try {
-    const raw = localStorage.getItem(key);
-    if (raw === null) return fallback;
-    const parsed = JSON.parse(raw);
-    if (validator && !validator(parsed)) {
-      localStorage.removeItem(key);
-      return fallback;
-    }
-    return parsed;
-  } catch (err) {
-    console.warn(`[Storage] Failed to read key "${key}":`, err);
+    const item = window.localStorage.getItem(key);
+    // Strict parsing fallback to prevent malformed data from crashing the app
+    return item ? JSON.parse(item) : fallback;
+  } catch (error) {
+    console.warn(`[Nocturne] Error reading or parsing localStorage key "${key}":`, error);
     return fallback;
   }
 }
 
 export function writeJSON(key, value) {
   try {
-    if (value === null || value === undefined) {
-      localStorage.removeItem(key);
-    } else {
-      localStorage.setItem(key, JSON.stringify(value));
-    }
-  } catch (err) {
-    console.warn(`[Storage] Failed to write key "${key}":`, err);
+    window.localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.warn(`[Nocturne] Quota exceeded or error writing to localStorage key "${key}":`, error);
   }
 }
 
-export function removeKey(key) {
+export function removeJSON(key) {
   try {
-    localStorage.removeItem(key);
-  } catch (err) {
-    console.warn(`[Storage] Failed to remove key "${key}":`, err);
+    window.localStorage.removeItem(key);
+  } catch (error) {
+    console.warn(`[Nocturne] Error removing localStorage key "${key}":`, error);
   }
 }

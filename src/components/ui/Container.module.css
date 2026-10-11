@@ -1,16 +1,31 @@
 .container {
   width: 100%;
   margin: 0 auto;
+  /* Fix: Deferred mobile side padding injected globally */
+  padding: 0 var(--space-4); 
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding: 0 var(--space-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 var(--space-8);
+  }
 }
 
 .narrow {
-  max-width: 640px; /* --container-narrow */
+  max-width: 640px;
 }
 
 .content {
-  max-width: 1120px; /* --container-content */
+  max-width: 1120px;
 }
 
 .wide {
-  max-width: 1280px; /* --container-wide */
+  max-width: 1280px;
 }

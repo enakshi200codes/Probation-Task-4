@@ -11,6 +11,7 @@ import EmptyState from "../components/ui/EmptyState";
 import ProductGallery from "../components/product/ProductGallery";
 import ProductPurchasePanel from "../components/product/ProductPurchasePanel";
 import ProductSpecs from "../components/product/ProductSpecs";
+import ProductReviews from "../components/product/ProductReviews";
 import ProductRail from "../components/home/ProductRail";
 import { PackageX } from "lucide-react";
 import styles from "./ProductDetailsPage.module.css";
@@ -23,7 +24,6 @@ export default function ProductDetailsPage() {
   const product = getProductById(productId);
   const relatedProducts = product ? selectRelated(product, products, RELATED_COUNT) : [];
   
-  // Filter out the current product from recently viewed and limit count
   const recentProducts = selectByIds(
     recentIds.filter((id) => id !== productId), 
     products
@@ -31,7 +31,6 @@ export default function ProductDetailsPage() {
 
   useDocumentTitle(product ? `${product.name} — Nocturne` : "Product Not Found");
 
-  // Record product view
   useEffect(() => {
     if (product) {
       addRecent(product.id);
@@ -61,6 +60,7 @@ export default function ProductDetailsPage() {
               <div className={styles.infoColumn}>
                 <ProductPurchasePanel product={product} />
                 <ProductSpecs specifications={product.specifications} />
+                <ProductReviews productId={product.id} />
               </div>
             </div>
 

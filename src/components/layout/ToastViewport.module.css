@@ -2,24 +2,25 @@
   position: fixed;
   bottom: var(--space-4);
   right: var(--space-4);
-  z-index: 9999; /* Ensures toasts sit above all overlays and dialogs */
+  z-index: 9999;
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
   pointer-events: none;
-  width: calc(100% - 32px); /* Responsive safety bounds for mobile */
+  width: calc(100% - 32px);
   max-width: 400px;
 }
 
 .toast {
   pointer-events: auto;
-  background-color: var(--color-card); /* Opaque solid background */
+  /* FIX: Swapped to --color-bg to guarantee a 100% solid, opaque background */
+  background-color: var(--color-bg); 
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-lg); /* Elevation over page content */
+  box-shadow: var(--shadow-lg); /* Keeps it elevated above the page */
   padding: var(--space-4);
   display: flex;
-  align-items: flex-start; /* Prevents icons from stretching if text wraps */
+  align-items: flex-start;
   gap: var(--space-3);
   color: var(--color-fg);
   animation: slideUp var(--duration-base) var(--ease-out);
@@ -27,7 +28,7 @@
 
 .icon {
   flex-shrink: 0;
-  margin-top: 2px; /* Aligns strictly with the first line of text */
+  margin-top: 2px;
 }
 
 .success .icon {
@@ -47,7 +48,7 @@
   font-size: var(--text-sm);
   line-height: var(--leading-snug);
   word-break: break-word;
-  overflow-wrap: break-word; /* Forces long strings to wrap safely */
+  overflow-wrap: break-word;
 }
 
 .closeBtn {
@@ -56,7 +57,7 @@
   color: var(--color-fg-secondary);
   cursor: pointer;
   padding: var(--space-1);
-  margin: calc(var(--space-1) * -1); /* Pulls button flush right while maintaining hit area */
+  margin: calc(var(--space-1) * -1);
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;

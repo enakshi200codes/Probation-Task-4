@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { loadCatalog } from "../services/catalogService";
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import { STORAGE_KEYS } from "../config/constants";
 
 const CatalogContext = createContext(null);
 
@@ -8,8 +10,10 @@ export function CatalogProvider({ children }) {
   const [error, setError] = useState(null);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [reviews, setReviews] = useState([]);
+  const [seedReviews, setSeedReviews] = useState([]);
   const [promos, setPromos] = useState({});
+  
+  const [localReviews, setLocalReviews] = useLocalStorage(STORAGE_KEYS.REVIEWS, []);
 
   const fetchCatalog = useCallback(() => {
     setStatus("loading");
@@ -21,7 +25,7 @@ export function CatalogProvider({ children }) {
         if (!isCancelled) {
           setProducts(data.products || []);
           setCategories(data.categories || []);
-          setReviews(data.reviews || []);
+          setSeedReviews(data.reviews || []);
           setPromos(data.promos || {});
           setStatus("ready");
         }
@@ -52,11 +56,24 @@ export function CatalogProvider({ children }) {
 
   const getReviewsForProduct = useCallback(
     (id) => {
-      return reviews
+      const combined = [...seedReviews, ...localReviews];
+      return combined
         .filter((r) => r.productId === id)
         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     },
-    [reviews]
+    [seedReviews, localReviews]
+  );
+
+  const addReview = useCallback(
+    (review) => {
+      const newReview = {
+        ...review,
+        id: `rev-local-${Date.now()}`,
+        createdAt: new Date().toISOString()
+      };
+      setLocalReviews((prev) => [newReview, ...prev]);
+    },
+    [setLocalReviews]
   );
 
   const value = {
@@ -64,11 +81,11 @@ export function CatalogProvider({ children }) {
     error,
     products,
     categories,
-    reviews,
     promos,
     reload: fetchCatalog,
     getProductById,
-    getReviewsForProduct
+    getReviewsForProduct,
+    addReview
   };
 
   return <CatalogContext.Provider value={value}>{children}</CatalogContext.Provider>;

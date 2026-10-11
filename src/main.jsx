@@ -10,10 +10,10 @@ import { WishlistProvider } from "./context/WishlistContext";
 import { RecentProvider } from "./context/RecentContext";
 import "./styles/tokens.css";
 import "./styles/base.css";
+import "./styles/a11y.css"; // Injected accessibility baseline
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    {/* Clean provider tree prevents duplicated state or viewports */}
     <ToastProvider>
       <AuthProvider>
         <CatalogProvider>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useCatalog } from "../context/CatalogContext";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
-import { PAGE_SIZE } from "../config/constants";
+import { PAGE_SIZE, RATING_FILTER_OPTIONS } from "../config/constants";
 import { parseListingParams, buildListingParams, filterProducts, sortProducts, paginate } from "../utils/listingQuery";
 import CatalogGate from "../components/layout/CatalogGate";
 import Container from "../components/ui/Container";
@@ -13,7 +13,7 @@ import Pagination from "../components/ui/Pagination";
 import EmptyState from "../components/ui/EmptyState";
 import Drawer from "../components/ui/Drawer";
 import Button from "../components/ui/Button";
-import { SlidersHorizontal, SearchX } from "lucide-react";
+import { SlidersHorizontal, SearchX, X } from "lucide-react";
 import styles from "./ProductsPage.module.css";
 
 export default function ProductsPage() {
@@ -22,14 +22,13 @@ export default function ProductsPage() {
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
 
   const query = parseListingParams(searchParams, categories);
-  
   useDocumentTitle(query.q ? `Results for "${query.q}"` : "Shop");
 
   const filtered = filterProducts(products, query, categories);
   const sorted = sortProducts(filtered, query.sort);
   const { items, page, totalPages, totalCount } = paginate(sorted, query.page || 1, PAGE_SIZE);
 
-  const hasActiveFilters = Boolean(query.category || query.minPrice || query.maxPrice || query.rating);
+  const hasActiveFilters = Boolean(query.category || query.minPrice !== "" || query.maxPrice !== "" || query.rating);
 
   const updateParams = (updates) => {
     const newQuery = { ...query, ...updates };
@@ -39,16 +38,31 @@ export default function ProductsPage() {
     setSearchParams(buildListingParams(newQuery));
   };
 
-  const handleFilterChange = (partial) => updateParams(partial);
-  const handleSortChange = (sort) => updateParams({ sort });
-  const handlePageChange = (newPage) => {
-    updateParams({ page: newPage });
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-  
   const handleClearAll = () => {
     setSearchParams(buildListingParams({ q: query.q, sort: query.sort, page: 1 }));
   };
+
+  const getActiveChips = () => {
+    const chips = [];
+    if (query.category) {
+      const cat = categories.find((c) => c.id === query.category);
+      if (cat) chips.push({ id: "category", label: `Category: ${cat.name}`, clearValue: { category: "" } });
+    }
+    if (query.minPrice !== "" || query.maxPrice !== "") {
+      let label = "Price: ";
+      if (query.minPrice !== "" && query.maxPrice !== "") label += `$${query.minPrice} - $${query.maxPrice}`;
+      else if (query.minPrice !== "") label += `Over $${query.minPrice}`;
+      else label += `Under $${query.maxPrice}`;
+      chips.push({ id: "price", label, clearValue: { minPrice: "", maxPrice: "" } });
+    }
+    if (query.rating) {
+      const rat = RATING_FILTER_OPTIONS.find((r) => r.value === query.rating);
+      if (rat) chips.push({ id: "rating", label: `Rating: ${rat.label}`, clearValue: { rating: "" } });
+    }
+    return chips;
+  };
+
+  const activeChips = getActiveChips();
 
   return (
     <CatalogGate>
@@ -69,7 +83,7 @@ export default function ProductsPage() {
               <SlidersHorizontal size={18} /> Filters
             </button>
             <div className={styles.sortWrapper}>
-              <SortSelect value={query.sort} onChange={handleSortChange} />
+              <SortSelect value={query.sort} onChange={(sort) => updateParams({ sort })} />
             </div>
           </div>
         </div>
@@ -79,13 +93,34 @@ export default function ProductsPage() {
             <FilterPanel
               categories={categories}
               filters={query}
-              onChange={handleFilterChange}
+              onChange={updateParams}
               onClear={handleClearAll}
               hasActiveFilters={hasActiveFilters}
             />
           </aside>
 
           <div className={styles.main}>
+            {activeChips.length > 0 && (
+              <div className={styles.chipsContainer}>
+                {activeChips.map((chip) => (
+                  <button
+                    key={chip.id}
+                    className={styles.chip}
+                    onClick={() => updateParams(chip.clearValue)}
+                    aria-label={`Remove filter: ${chip.label}`}
+                  >
+                    {chip.label}
+                    <X size={14} className={styles.chipIcon} />
+                  </button>
+                ))}
+                {activeChips.length > 1 && (
+                  <button className={styles.clearAllBtn} onClick={handleClearAll}>
+                    Clear all
+                  </button>
+                )}
+              </div>
+            )}
+
             {totalCount === 0 ? (
               <EmptyState
                 icon={SearchX}
@@ -97,7 +132,7 @@ export default function ProductsPage() {
             ) : (
               <>
                 <ProductGrid products={items} variant="listing" />
-                <Pagination page={page} totalPages={totalPages} onPageChange={handlePageChange} />
+                <Pagination page={page} totalPages={totalPages} onPageChange={(page) => updateParams({ page })} />
               </>
             )}
           </div>
@@ -118,7 +153,7 @@ export default function ProductsPage() {
         <FilterPanel
           categories={categories}
           filters={query}
-          onChange={handleFilterChange}
+          onChange={updateParams}
           onClear={handleClearAll}
           hasActiveFilters={hasActiveFilters}
         />

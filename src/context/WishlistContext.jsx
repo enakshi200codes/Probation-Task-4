@@ -10,7 +10,7 @@ export function WishlistProvider({ children }) {
   const { showToast } = useToast();
 
   const toggleWishlist = useCallback((productId, productName) => {
-    // Check the current state closure instead of relying on the updater function's 'prev' argument
+    // Audit Fix: Side-effects (showToast) MUST sit outside state updaters to prevent StrictMode duplication.
     const isSaved = items.includes(productId);
 
     if (isSaved) {
@@ -18,7 +18,6 @@ export function WishlistProvider({ children }) {
       showToast(`${productName} removed from wishlist`, { type: "info" });
     } else {
       setItems((prev) => {
-        // Prevent duplicate IDs just in case
         const filtered = prev.filter((id) => id !== productId);
         return [productId, ...filtered];
       });
