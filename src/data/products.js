@@ -167,7 +167,7 @@ export const products = [
     originalPrice: null,
     rating: 4.7,
     reviewCount: 156,
-    images: ["https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80"],
+    images: ["https://images.unsplash.com/photo-1545127398-14699f92334b?q=80&w=435&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D"],
     description: "Plush memory foam earcups and active noise cancellation designed for late-night listening without disturbing the house.",
     specifications: [
       { label: "ANC", value: "Hybrid active noise cancellation" },
