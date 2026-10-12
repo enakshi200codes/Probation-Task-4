@@ -4,6 +4,7 @@ import { Heart, User, ShoppingBag, Menu } from "lucide-react";
 import SearchBar from "./SearchBar";
 import { useCart } from "../../context/CartContext";
 import styles from "./Navbar.module.css";
+import icon from "../../assets/icon.png";
 
 export default function Navbar() {
   const { itemCount } = useCart();
@@ -14,6 +15,7 @@ export default function Navbar() {
         
         <div className={styles.leftGroup}>
           <Link to="/" className={styles.logo}>
+            <img src={icon} alt="Nocturne" className={styles.logoIcon} />
             Nocturne<span className={styles.logoDot}>.</span>
           </Link>
         </div>
