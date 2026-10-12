@@ -10,7 +10,7 @@ import { WishlistProvider } from "./context/WishlistContext";
 import { RecentProvider } from "./context/RecentContext";
 import "./styles/tokens.css";
 import "./styles/base.css";
-import "./styles/a11y.css"; // Injected accessibility baseline
+import "./styles/a11y.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

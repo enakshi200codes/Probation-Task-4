@@ -1,14 +1,20 @@
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigationType } from "react-router-dom";
 
 export default function ScrollToTop() {
   const { pathname } = useLocation();
+  const action = useNavigationType();
 
   useEffect(() => {
-    // Resets scroll position when navigating to a new route, preventing users
-    // from landing at the bottom of the checkout page if they clicked from the bottom of the cart.
+    if (action === "POP") {
+      return;
+    }
+
+    document.documentElement.style.scrollBehavior = "auto";
     window.scrollTo(0, 0);
-  }, [pathname]);
+
+    document.documentElement.style.scrollBehavior = "";
+  }, [pathname, action]);
 
   return null;
 }

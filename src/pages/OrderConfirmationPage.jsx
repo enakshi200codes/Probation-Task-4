@@ -20,7 +20,6 @@ export default function OrderConfirmationPage() {
 
   useDocumentTitle(order ? `Order ${order.id} Confirmed` : "Order Not Found");
 
-  // Ruthless barricade: If they try to hit this route without a valid order ID, boot them.
   if (!order) {
     return <Navigate to="/" replace />;
   }

@@ -18,7 +18,6 @@
   text-decoration: line-through;
 }
 
-/* Size variants */
 .base .currentPrice {
   font-size: var(--text-lg);
 }

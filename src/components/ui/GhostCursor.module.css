@@ -1,0 +1,85 @@
+:global(body.has-ghost-cursor),
+:global(body.has-ghost-cursor) * {
+  cursor: none !important;
+}
+
+:global(body.has-ghost-cursor) input,
+:global(body.has-ghost-cursor) textarea,
+:global(body.has-ghost-cursor) [contenteditable="true"] {
+  cursor: text !important;
+}
+
+.cursorContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.visible {
+  opacity: 1;
+}
+
+.dot {
+  position: fixed;
+  top: -3px; 
+  left: -3px;
+  width: 6px;
+  height: 6px;
+  background-color: #A1A1AA; 
+  border-radius: var(--radius-full);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.ringWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.ringInner {
+  width: 32px;
+  height: 32px;
+  margin: -16px 0 0 -16px;
+  border: 1px solid rgba(161, 161, 170, 0.45);
+  background-color: transparent; 
+  border-radius: var(--radius-full);
+  transition: width var(--duration-base) var(--ease-out),
+              height var(--duration-base) var(--ease-out),
+              margin var(--duration-base) var(--ease-out),
+              border-color var(--duration-base) var(--ease-out),
+              background-color var(--duration-base) var(--ease-out),
+              transform var(--duration-fast) var(--ease-out);
+}
+
+.hovering .ringInner {
+  width: 48px;
+  height: 48px;
+  margin: -24px 0 0 -24px;
+  border-color: rgba(161, 161, 170, 0.8); 
+  background-color: transparent; 
+}
+
+.clicking .ringInner {
+  transform: scale(0.85);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ringWrapper {
+    display: none; 
+  }
+  
+  .cursorContainer {
+    transition: none;
+  }
+  
+  .clicking .dot {
+    transform: scale(0.8);
+  }
+}

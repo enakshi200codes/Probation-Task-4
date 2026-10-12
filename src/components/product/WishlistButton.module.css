@@ -23,7 +23,7 @@
   background-color: var(--color-bg-alt);
   border: var(--border-width) solid var(--color-border);
   box-shadow: var(--shadow-sm);
-  z-index: 10; /* Keep above card link overlay */
+  z-index: 10;
 }
 
 .card:hover {

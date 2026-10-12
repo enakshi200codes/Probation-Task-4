@@ -1,8 +1,11 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer"; /* FIX: Restored missing import */
 import ToastViewport from "./components/layout/ToastViewport";
 import ScrollToTop from "./components/layout/ScrollToTop";
+import GhostCursor from "./components/ui/GhostCursor";
+
 import HomePage from "./pages/HomePage";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
@@ -17,7 +20,7 @@ import AccountPage from "./pages/AccountPage";
 export default function App() {
   return (
     <div className="app-container">
-      {/* Restores expected scroll behavior across the SPA */}
+      <GhostCursor />
       <ScrollToTop />
       <Navbar />
       <main className="main-content">
@@ -34,6 +37,7 @@ export default function App() {
           <Route path="/account" element={<AccountPage />} />
         </Routes>
       </main>
+      <Footer />
       <ToastViewport />
     </div>
   );

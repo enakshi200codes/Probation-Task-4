@@ -3,7 +3,6 @@
   gap: var(--grid-gap);
 }
 
-/* Listing Variant: 2 cols below 640px, 3 cols from 640px */
 .listing {
   grid-template-columns: repeat(2, 1fr);
 }
@@ -14,7 +13,6 @@
   }
 }
 
-/* Rail Variant: 2 cols below 768px, 4 cols from 768px */
 .rail {
   grid-template-columns: repeat(2, 1fr);
 }

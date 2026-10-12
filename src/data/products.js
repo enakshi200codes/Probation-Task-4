@@ -244,7 +244,7 @@ export const products = [
     originalPrice: null,
     rating: 4.6,
     reviewCount: 142,
-    images: ["https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80"],
+    images: ["https://images.unsplash.com/photo-1650394923482-a0d03ffb2512?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D"],
     description: "Supple vegan leather desk pad providing a smooth, sound-dampening surface for keyboard and mouse work.",
     specifications: [
       { label: "Material", value: "Polyurethane vegan leather" },
@@ -300,7 +300,7 @@ export const products = [
     originalPrice: null,
     rating: 4.8,
     reviewCount: 167,
-    images: ["https://images.unsplash.com/photo-1622445275574-5552758369cb?auto=format&fit=crop&w=800&q=80"],
+    images: ["https://images.unsplash.com/photo-1633381638729-27f730955c23?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D"],
     description: "Weighted zinc-alloy magnetic fast wireless charger designed to stay securely anchored to your desk.",
     specifications: [
       { label: "Output", value: "15W fast charging" },

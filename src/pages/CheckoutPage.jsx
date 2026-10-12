@@ -21,8 +21,6 @@ export default function CheckoutPage() {
   const cartLines = useMemo(() => buildCartLines(items, products), [items, products]);
   const totals = useMemo(() => calculateTotals(cartLines), [cartLines]);
 
-  // Barricade: Prevent users from checking out with an empty cart
-  // Bypass if the order was just successfully placed to allow the router transition to finish
   if (totalItems === 0 && !isOrderPlaced) {
     return <Navigate to="/cart" replace />;
   }

@@ -89,15 +89,11 @@ button {
   }
 }
 
-
-/* Midnight Amber — Custom Scrollbar */
-
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--color-accent, #b88746) #171614;
 }
 
-/* Chromium browsers: Chrome, Edge, etc. */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;

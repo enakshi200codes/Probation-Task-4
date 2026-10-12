@@ -1,7 +1,6 @@
 export function readJSON(key, fallback) {
   try {
     const item = window.localStorage.getItem(key);
-    // Strict parsing fallback to prevent malformed data from crashing the app
     return item ? JSON.parse(item) : fallback;
   } catch (error) {
     console.warn(`[Nocturne] Error reading or parsing localStorage key "${key}":`, error);

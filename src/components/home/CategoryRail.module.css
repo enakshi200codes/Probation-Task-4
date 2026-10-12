@@ -1,0 +1,110 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-accent);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+  color: var(--color-fg);
+  margin: 0;
+}
+
+.rail {
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: var(--space-4);
+  width: 100%;
+  min-width: 0; 
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+.card {
+  flex: 0 0 auto;
+  width: 160px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  background-color: var(--color-card);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  scroll-snap-align: start;
+  transition: border-color var(--transition-colors), background-color var(--transition-colors);
+}
+
+@media (min-width: 768px) {
+  .card {
+    width: 200px;
+    height: 100px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .rail {
+    overflow-x: visible;
+  }
+  .card {
+    flex: 1 1 0;
+    width: auto;
+  }
+}
+
+.card:hover {
+  border-color: var(--color-accent);
+  background-color: rgba(255, 255, 255, var(--opacity-hover-overlay));
+}
+
+.iconWrapper {
+  color: var(--color-fg-secondary);
+  transition: color var(--transition-colors);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card:hover .iconWrapper {
+  color: var(--color-accent);
+}
+
+.name {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--color-fg);
+  text-align: center;
+  line-height: 1;
+}
+
+.card:hover .name {
+  color: var(--color-accent);
+}

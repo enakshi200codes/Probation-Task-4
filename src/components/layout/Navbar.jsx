@@ -1,90 +1,60 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Search, Menu, Heart, User, ShoppingBag } from "lucide-react";
+import { Heart, User, ShoppingBag, Menu } from "lucide-react";
 import SearchBar from "./SearchBar";
-import CartLink from "./CartLink";
-import MobileMenu from "./MobileMenu";
-import { useAuth } from "../../context/AuthContext";
+import { useCart } from "../../context/CartContext";
 import styles from "./Navbar.module.css";
 
 export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const menuButtonRef = useRef(null);
-  const { isAuthenticated } = useAuth();
-
-  const handleCloseMenu = () => {
-    setIsMenuOpen(false);
-    menuButtonRef.current?.focus();
-  };
-
+  const { itemCount } = useCart();
+  
   return (
     <header className={styles.header}>
-      <div className={styles.navInner}>
+      <div className={styles.inner}>
+        
         <div className={styles.leftGroup}>
-          <button
-            ref={menuButtonRef}
-            type="button"
-            className={styles.menuButton}
-            onClick={() => setIsMenuOpen(true)}
-            aria-label="Open navigation menu"
-          >
-            <Menu size={20} />
-          </button>
-          <Link to="/" className={styles.brand}>
-            Nocturne<span className={styles.brandDot}>.</span>
+          <Link to="/" className={styles.logo}>
+            Nocturne<span className={styles.logoDot}>.</span>
           </Link>
         </div>
 
-        <nav className={styles.desktopNav}>
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              `${styles.navLink} ${isActive ? styles.active : ""}`
-            }
+        <nav className={styles.centerGroup}>
+          <NavLink 
+            to="/" 
+            className={({ isActive }) => isActive ? `${styles.navLink} ${styles.active}` : styles.navLink}
             end
           >
             Home
           </NavLink>
-          <NavLink
-            to="/products"
-            className={({ isActive }) =>
-              `${styles.navLink} ${isActive ? styles.active : ""}`
-            }
+          <NavLink 
+            to="/products" 
+            className={({ isActive }) => isActive ? `${styles.navLink} ${styles.active}` : styles.navLink}
           >
             Shop
           </NavLink>
         </nav>
 
         <div className={styles.rightGroup}>
-          <div className={styles.desktopSearch}>
+          <div className={styles.searchWrapper}>
             <SearchBar />
           </div>
-          <button
-            type="button"
-            className={styles.searchToggle}
-            onClick={() => setIsSearchOpen((prev) => !prev)}
-            aria-label="Toggle search"
-          >
-            <Search size={20} />
+          <Link to="/wishlist" className={styles.iconBtn} aria-label="Wishlist">
+            <Heart size={20} strokeWidth={1.5} />
+          </Link>
+          <Link to="/account" className={styles.iconBtn} aria-label="Account">
+            <User size={20} strokeWidth={1.5} />
+          </Link>
+          <Link to="/cart" className={styles.iconBtn} aria-label="Cart">
+            <ShoppingBag size={20} strokeWidth={1.5} />
+            {itemCount > 0 && <span className={styles.badge}>{itemCount}</span>}
+          </Link>
+          
+          <button className={styles.mobileMenuBtn} aria-label="Menu">
+            <Menu size={24} strokeWidth={1.5} />
           </button>
-          <Link to="/wishlist" className={styles.iconLink} aria-label="Wishlist">
-            <Heart size={20} />
-          </Link>
-          <Link to={isAuthenticated ? "/account" : "/login"} className={styles.iconLink} aria-label="Account">
-            <User size={20} />
-          </Link>
-          <CartLink />
         </div>
+        
       </div>
-
-      {isSearchOpen && (
-        <div className={styles.mobileSearchRow}>
-          <SearchBar onSearched={() => setIsSearchOpen(false)} />
-        </div>
-      )}
-
-      <MobileMenu isOpen={isMenuOpen} onClose={handleCloseMenu} />
     </header>
   );
 }

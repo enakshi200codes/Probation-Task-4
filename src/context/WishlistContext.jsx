@@ -10,7 +10,6 @@ export function WishlistProvider({ children }) {
   const { showToast } = useToast();
 
   const toggleWishlist = useCallback((productId, productName) => {
-    // Audit Fix: Side-effects (showToast) MUST sit outside state updaters to prevent StrictMode duplication.
     const isSaved = items.includes(productId);
 
     if (isSaved) {

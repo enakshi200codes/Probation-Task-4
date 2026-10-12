@@ -13,11 +13,10 @@
 
 .toast {
   pointer-events: auto;
-  /* FIX: Swapped to --color-bg to guarantee a 100% solid, opaque background */
   background-color: var(--color-bg); 
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-lg); /* Keeps it elevated above the page */
+  box-shadow: var(--shadow-lg);
   padding: var(--space-4);
   display: flex;
   align-items: flex-start;

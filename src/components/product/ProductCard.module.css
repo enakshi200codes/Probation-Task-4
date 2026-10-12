@@ -27,8 +27,7 @@
   .card:hover .imageLink img {
     transform: scale(1.03);
   }
-  
-  /* Make button amber on card hover as per design specs */
+
   .card:hover .actionWrapper button {
     background-color: var(--color-accent);
     color: var(--color-accent-fg);
@@ -93,5 +92,5 @@
 
 .actionWrapper {
   position: relative;
-  z-index: 2; /* Keep button clickable above the card's pseudo-link */
+  z-index: 2; 
 }

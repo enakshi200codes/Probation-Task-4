@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useToast } from "../../context/ToastContext";
+import { useAuth } from "../../context/AuthContext";
 import { PLACE_ORDER_DELAY_MS, STORAGE_KEYS } from "../../config/constants";
 import { writeJSON, readJSON } from "../../utils/storage";
 import InputField from "../ui/InputField";
@@ -12,13 +13,15 @@ export default function CheckoutForm({ cartLines, totals, onOrderSuccess }) {
   const navigate = useNavigate();
   const { clearCart } = useCart();
   const { showToast } = useToast();
+  const { user } = useAuth();
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
 
   const [formData, setFormData] = useState({
-    email: "",
-    firstName: "",
-    lastName: "",
+    email: user?.email || "",
+    firstName: user?.firstName || "",
+    lastName: user?.lastName || "",
     address: "",
     city: "",
     zipCode: "",
@@ -28,7 +31,12 @@ export default function CheckoutForm({ cartLines, totals, onOrderSuccess }) {
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
+
+    if (name === "expiry" && value.length === 2 && formData.expiry.length === 1 && !value.includes("/")) {
+      value = value + "/";
+    }
+
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: null }));
@@ -42,12 +50,35 @@ export default function CheckoutForm({ cartLines, totals, onOrderSuccess }) {
     if (!formData.lastName.trim()) newErrors.lastName = "Last name is required.";
     if (!formData.address.trim()) newErrors.address = "Address is required.";
     if (!formData.city.trim()) newErrors.city = "City is required.";
-    if (!formData.zipCode.trim()) newErrors.zipCode = "ZIP Code is required.";
     
-    // Naive mock validation for visual feedback
-    if (formData.cardNumber.replace(/\D/g, "").length < 15) newErrors.cardNumber = "Enter a valid card number.";
-    if (!formData.expiry.trim()) newErrors.expiry = "Required.";
-    if (!formData.cvc.trim()) newErrors.cvc = "Required.";
+    const zipClean = formData.zipCode.trim();
+    if (!/^\d{6}$/.test(zipClean)) {
+      newErrors.zipCode = "Enter exactly a 6-digit PIN code.";
+    }
+
+    const cleanCard = formData.cardNumber.replace(/\s/g, "");
+    if (!/^\d{15,19}$/.test(cleanCard)) {
+      newErrors.cardNumber = "Enter a valid 15-19 digit card number.";
+    }
+
+    const expiryClean = formData.expiry.trim();
+    if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiryClean)) {
+      newErrors.expiry = "Use MM/YY format (e.g., 12/26).";
+    } else {
+      const [mm, yy] = expiryClean.split("/");
+      const month = parseInt(mm, 10);
+      const year = parseInt(`20${yy}`, 10);
+      const now = new Date();
+      const currentYear = now.getFullYear();
+      const currentMonth = now.getMonth() + 1;
+      
+      if (year < currentYear || (year === currentYear && month < currentMonth)) {
+        newErrors.expiry = "This card has expired.";
+      }
+    }
+    if (!/^\d{3,4}$/.test(formData.cvc.trim())) {
+      newErrors.cvc = "Enter a valid 3 or 4-digit CVC.";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -61,13 +92,12 @@ export default function CheckoutForm({ cartLines, totals, onOrderSuccess }) {
     }
 
     setIsSubmitting(true);
-    
-    // Simulated network delay for placing the order
     setTimeout(() => {
-      // 1. Snapshot the order details
       const orderId = `ORD-${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
+
       const newOrder = {
         id: orderId,
+        userId: user ? user.id : null,
         createdAt: new Date().toISOString(),
         customer: {
           email: formData.email,
@@ -81,18 +111,14 @@ export default function CheckoutForm({ cartLines, totals, onOrderSuccess }) {
         totals: totals
       };
 
-      // 2. Persist to storage safely
       const existingOrders = readJSON(STORAGE_KEYS.ORDERS, []);
       writeJSON(STORAGE_KEYS.ORDERS, [newOrder, ...existingOrders]);
 
-      // 3. Notify parent that order is secured to disarm the empty-cart barricade
       if (onOrderSuccess) onOrderSuccess();
 
-      // 4. Clear the cart only AFTER snapshot is secure and barricade is down
       setIsSubmitting(false);
       clearCart();
       
-      // 5. Redirect to Phase 8 Confirmation Page
       showToast("Order placed successfully!", { type: "success" });
       navigate(`/order-confirmation/${orderId}`);
     }, PLACE_ORDER_DELAY_MS);
@@ -158,10 +184,11 @@ export default function CheckoutForm({ cartLines, totals, onOrderSuccess }) {
           <InputField
             id="zipCode"
             name="zipCode"
-            label="ZIP code"
+            label="ZIP / PIN code"
             value={formData.zipCode}
             onChange={handleChange}
             error={errors.zipCode}
+            maxLength={6}
             required
           />
         </div>
@@ -177,7 +204,7 @@ export default function CheckoutForm({ cartLines, totals, onOrderSuccess }) {
           value={formData.cardNumber}
           onChange={handleChange}
           error={errors.cardNumber}
-          maxLength={19}
+          maxLength={23}
           required
         />
         <div className={styles.grid}>

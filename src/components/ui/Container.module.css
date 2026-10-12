@@ -1,7 +1,6 @@
 .container {
   width: 100%;
   margin: 0 auto;
-  /* Fix: Deferred mobile side padding injected globally */
   padding: 0 var(--space-4); 
   box-sizing: border-box;
 }

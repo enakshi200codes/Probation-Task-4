@@ -19,7 +19,6 @@ export function AuthProvider({ children }) {
       return false;
     }
 
-    // Obfuscating password for mock purposes (Do not use base64 in production!)
     const mockHash = btoa(password);
     
     const newUser = {
@@ -31,8 +30,7 @@ export function AuthProvider({ children }) {
     };
 
     setUsers((prev) => [...prev, newUser]);
-    
-    // Auto-login after registration (store session WITHOUT sensitive data)
+
     setSession({ id: newUser.id, firstName, lastName, email: emailLower });
     showToast("Account created successfully.", { type: "success" });
     return true;
