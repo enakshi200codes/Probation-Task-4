@@ -1,16 +1,23 @@
-# React + Vite
+# Nocturne
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **Objects for the evening.**
 
-Currently, two official plugins are available:
+Nocturne is a premium, dark-mode e-commerce prototype built with React and Vite that pairs cinematic UI design with robust frontend state management. It features a high-fidelity shopping funnel complete with mock authentication, bespoke scroll animations, and bulletproof LocalStorage persistence.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Features
 
-## React Compiler
+*   **Cinematic Experience:** Premium dark-editorial aesthetic with smooth scrolling, staggered scroll-reveal animations, subtle parallax effects, and a custom ivory ghost cursor.
+*   **Listing Engine:** URL-synchronized filtering (category, price, rating), sorting, and pagination.
+*   **Shopping Cart:** Persistent cart state, dynamic shipping threshold calculations, and quantity limits.
+*   **Mock Checkout:** Client-side validation, simulated processing latency, robust empty-cart barricades, and strict regex-enforced form boundaries.
+*   **Order Confirmation:** Snapshot-based order receipts saved securely to local storage.
+*   **Wishlist & Recently Viewed:** Synchronized persistent lists with native deduplication.
+*   **Mock Authentication:** Secure, password-free local session state allowing users to register, log in, and view protected account routes and isolated order histories.
+*   **Accessible UI:** Native focus rings, reduced-motion fallback support, keyboard-navigable components, and fully responsive layouts (320px to 1440px).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠 Technology Stack
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+*   **Framework:** [React 18](https://reactjs.org/)
+*   **Build Tool:** [Vite](https://vitejs.dev/)
+*   **Styling:** CSS Modules (Native CSS with scoped classes and design tokens)
+*   **Icons:** [Lucide React](https://lucide.dev/)
